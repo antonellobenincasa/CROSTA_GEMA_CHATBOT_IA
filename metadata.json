@@ -1,0 +1,9 @@
+{
+  "name": "CROSTA AI Assistant",
+  "description": "Asistente virtual inteligente para CROSTA by PEPESMASH. Toma pedidos, responde dudas del menú y procesa pagos.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
