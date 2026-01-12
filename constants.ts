@@ -15,14 +15,50 @@ export const BRAND_LOGO = "https://ui-avatars.com/api/?name=Pepe+Smash&backgroun
 // Placeholder para la imagen de horarios
 export const HOURS_IMAGE_URL = "https://placehold.co/1080x1920/FF5722/FFFFFF/png?text=HORARIOS+CROSTA";
 
-// Bank Details
-export const BANK_DETAILS = {
-  BANK: "Banco Pichincha",
-  TYPE: "Cuenta Corriente",
-  NUMBER: "1234567890",
-  RUC: "0999999999001",
-  NAME: "PEPESMASH S.A."
+// New Payment Info Structure
+export const PAYMENT_INFO = {
+  BENEFICIARY: "Juan Jose Buendia Farra",
+  ID: "0932072697",
+  EMAIL: "juanjose.buendia96@gmail.com",
+  ACCOUNTS: [
+    { bank: "Banco Pacifico", type: "Cta ahorros", number: "1057590885" },
+    { bank: "Banco Guayaquil", type: "Cta ahorros", number: "0013990331" },
+    { bank: "Banco Internacional", type: "Cta Ahorros", number: "1210716963" },
+    { bank: "Banco Bolivariano", type: "Cta Ahorros", number: "0021875853" }
+  ]
 };
+
+// Texto predefinido para pagos
+const PAYMENT_RESPONSE_TEXT = `Realizar la transferencia o deposito bancario con las siguientes coordenadas:
+
+Juan Jose Buendia Farra
+Cedula: 0932072697
+Correo: juanjose.buendia96@gmail.com
+
+Banco Pacifico
+Cta ahorros 1057590885
+
+Banco Guayaquil
+Cta ahorros 0013990331
+
+Banco Internacional
+Cta Ahorros 1210716963
+
+Banco Bolivariano
+Cta Ahorros 0021875853
+
+Por fa ayúdanos con el comprobante de transferencia para poder realizar tu pedido 😋 !`;
+
+// Texto predefinido para ubicación
+const LOCATION_RESPONSE_TEXT = `📍 **Ubicación para Retiro (Dark Kitchen):**
+
+Coordenadas: 2°09'41.5"S 79°54'17.7"W
+Plus Code: R3QW+92P Guayaquil
+
+🗺️ **Ver en Google Maps:**
+https://www.google.com/maps/place/2%C2%B009'41.5%22S+79%C2%B054'17.7%22W
+
+(Estamos ubicados en Guayaquil. Recuerda confirmar tu pedido antes de acercarte)`;
 
 // Structured Menu Data for the UI
 export const STRUCTURED_MENU: MenuCategory[] = [
@@ -104,7 +140,8 @@ CASO 1: EL USUARIO ESCRIBE "1" (DELIVERY)
     *   Nombre y Apellido.
     *   Dirección EXACTA (Calles principales, numeración de villa/edificio).
     *   Referencia de ubicación.
-5.  **Cobrar:** Indica los datos bancarios (${BANK_DETAILS.BANK}, ${BANK_DETAILS.TYPE} ${BANK_DETAILS.NUMBER}, RUC ${BANK_DETAILS.RUC}, Nombre: ${BANK_DETAILS.NAME}) y pide OBLIGATORIAMENTE la FOTO/CAPTURA del comprobante.
+5.  **Cobrar:** Para indicar los datos bancarios, USA EXACTAMENTE ESTE TEXTO:
+    "${PAYMENT_RESPONSE_TEXT}"
 6.  **Finalizar:** Cuando suban la foto, responde con el resumen completo del pedido y los datos del cliente, y termina con la frase: "LISTO PARA WHATSAPP".
 
 CASO 2: EL USUARIO ESCRIBE "2" (PICK UP)
@@ -113,21 +150,25 @@ CASO 2: EL USUARIO ESCRIBE "2" (PICK UP)
 3.  **Calcular Totales:** Muestra Subtotal + IVA (15%) = Total a Pagar.
 4.  **Solicitar Datos:** Pide solamente:
     *   Nombre y Apellido de quien retira.
-5.  **Cobrar:** Indica datos bancarios y PIDE FOTO del pago.
-6.  **Instrucción de Retiro:** Una vez pagado, diles: "La dirección exacta de nuestra cocina oculta te la enviaremos por WhatsApp al confirmar este pedido".
+5.  **Cobrar:** Para indicar los datos bancarios, USA EXACTAMENTE ESTE TEXTO:
+    "${PAYMENT_RESPONSE_TEXT}"
+6.  **Instrucción de Retiro:** Una vez pagado, entrega la dirección usando este texto exacto:
+    "${LOCATION_RESPONSE_TEXT}"
 7.  **Finalizar:** Responde con el resumen y la frase: "LISTO PARA WHATSAPP".
 
 CASO 3: PREGUNTAS GENERALES
-- **REGLA ESTRICTA PARA HORARIOS:** Si el usuario pregunta por los horarios, a qué hora abren o cierran, DEBES RESPONDER EXACTAMENTE CON ESTE TEXTO:
+- **REGLA ESTRICTA PARA HORARIOS:** Si el usuario pregunta por los horarios, usa este texto:
   "Con gusto, aqui te detallo nuestro horario de atencion y ademas lo puedes ver al lado del menu en boton HORARIOS !
-
   MARTES – JUEVES: 5:30PM – 10:00PM
-
   VIERNES – SÁBADO: 5:30PM – 10:30PM
-
   DOMINGO: 5:30PM – 10:00PM
-
   LUNES: CERRADO"
+
+- **REGLA ESTRICTA PARA PAGOS:** Si el usuario pregunta "cómo pagar", "datos bancarios", "forma de pago" o similar fuera del flujo de pedido, RESPONDE EXACTAMENTE:
+  "${PAYMENT_RESPONSE_TEXT}"
+
+- **REGLA ESTRICTA PARA UBICACIÓN:** Si el usuario pregunta "¿dónde queda?", "dirección", "ubicación", "mapa" o similar, RESPONDE EXACTAMENTE:
+  "${LOCATION_RESPONSE_TEXT}"
 
 - Si el usuario pregunta sobre menú o ingredientes, responde amablemente a su duda y luego recuérdale las opciones: "Cuando estés listo, escribe 1 para Delivery o 2 para Pick Up".
 
